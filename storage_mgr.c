@@ -78,4 +78,29 @@ RC readBlock(int pageNum, SM_FileHandle *fHandle, SM_PageHandle memPage) {
     return RC_OK;
 }
 
+int getBlockPos(SM_FileHandle *fHandle) {
+    return fHandle->curPagePos;
+}
+
+
+RC readFirstBlock(SM_FileHandle *fHandle, SM_PageHandle memPage) {
+    return readBlock(0, fHandle, memPage);
+}
+
+
+RC readPreviousBlock(SM_FileHandle *fHandle, SM_PageHandle memPage) {
+    if (fHandle->curPagePos <= 0) return RC_READ_NON_EXISTING_PAGE;
+    return readBlock(fHandle->curPagePos - 1, fHandle, memPage);
+}
+
+RC readCurrentBlock(SM_FileHandle *fHandle, SM_PageHandle memPage) {
+    return readBlock(fHandle->curPagePos, fHandle, memPage);
+}
+
+
+RC readNextBlock(SM_FileHandle *fHandle, SM_PageHandle memPage) {
+    if (fHandle->curPagePos >= fHandle->totalNumPages - 1) return RC_READ_NON_EXISTING_PAGE;
+    return readBlock(fHandle->curPagePos + 1, fHandle, memPage);
+}
+
 

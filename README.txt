@@ -19,6 +19,21 @@
    Positioning in File: Uses fseek to move to the specific page in the file by calculating the byte offset as pageNum * PAGE_SIZE.
    File Read: Reads the page data into the memory buffer (memPage) using fread.
 
+6. getBlockPos(SM_FileHandle *fHandle)
+   Returns the current page position stored in curPagePos.
+
+7. readFirstBlock(SM_FileHandle *fHandle, SM_PageHandle memPage)
+   Reads the first page of the file by calling readBlock(0, fHandle, memPage).
+
+8. readPreviousBlock(SM_FileHandle *fHandle, SM_PageHandle memPage)
+  Reads the previous page relative to the current page position by calling readBlock(fHandle->curPagePos - 1, fHandle, memPage).
+
+9. readCurrentBlock(SM_FileHandle *fHandle, SM_PageHandle memPage)
+   Reads the block at the current page position stored in curPagePos using readBlock.
+
+
+10. readNextBlock(SM_FileHandle *fHandle, SM_PageHandle memPage)
+    Reads the next block relative to the current page position by calling readBlock(fHandle->curPagePos + 1, fHandle, memPage).
 
 
 Functions used:
